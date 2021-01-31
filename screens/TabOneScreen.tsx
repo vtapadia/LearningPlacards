@@ -1,16 +1,48 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { data, addAsync } from '../assets/data/Dictionary';
 
 import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { Text, View, SafeAreaView } from '../components/Themed';
+import { DictionaryItem } from '../types';
 
 export default function TabOneScreen() {
+  const [result,setResult] = React.useState(false);
+
+  const [item, setItem] = React.useState<DictionaryItem>();
+
+  const random = () => {
+    // alert (data.length)
+    const l = data.length - 1;
+    const ran = Math.floor(Math.random()*l)
+    return data[ran];
+  }
+
+  React.useEffect(()=> {
+    setItem(random())
+  }, []);
+
+  const clicked = () => {
+    setResult(!result);
+    setItem(random());
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Practice</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
+      <View style={styles.practiceView}>
+        <TouchableHighlight style={styles.practiceTouch} onPress={clicked}>
+          <View style={styles.qaView}>
+            <Text style={styles.question}>{item?.unknown}</Text>
+            { result ? 
+            <Text style={styles.answer}>{item?.known}</Text> : <Text style={styles.answer}></Text>
+            }
+          </View>
+        </TouchableHighlight>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -29,4 +61,33 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  practiceView: {
+    flex: 1,
+    // backgroundColor: 'yellow',
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  practiceTouch: {
+    height: '100%',
+    alignSelf: 'stretch',
+    // backgroundColor: 'green',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  qaView:{
+    height: '100%',
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center'
+  },
+  question: {
+    height: '40%',
+    padding: 10,
+    fontSize: 24
+  },
+  answer: {
+    height: '40%',
+    fontSize: 24,
+  }
 });
