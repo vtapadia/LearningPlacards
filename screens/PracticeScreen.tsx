@@ -7,7 +7,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView } from '../components/Themed';
 import { DictionaryItem } from '../types';
 
-export default function TabOneScreen() {
+export default function PracticeScreen() {
   const [result,setResult] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
 

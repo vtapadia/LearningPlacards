@@ -5,9 +5,9 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+import PracticeScreen from '../screens/PracticeScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, PracticeParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -21,7 +21,7 @@ export default function BottomTabNavigator() {
       >
       <BottomTab.Screen
         name="Practice"
-        component={TabOneNavigator}
+        component={PracticeNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -45,17 +45,17 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const PracticeStack = createStackNavigator<PracticeParamList>();
 
-function TabOneNavigator() {
+function PracticeNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title', headerShown: false}}
+    <PracticeStack.Navigator>
+      <PracticeStack.Screen
+        name="PracticeScreen"
+        component={PracticeScreen}
+        options={{ headerTitle: 'Practice Title', headerShown: false}}
       />
-    </TabOneStack.Navigator>
+    </PracticeStack.Navigator>
   );
 }
 
