@@ -4,8 +4,8 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Practice: undefined;
+  Data: undefined;
 };
 
 export type TabOneParamList = {
@@ -15,3 +15,9 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+export type DictionaryItem = {
+  known: string;
+  unknown: string
+}
+
