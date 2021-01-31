@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { data, addAsync } from '../assets/data/Dictionary';
+import { data } from '../assets/data/Dictionary';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView } from '../components/Themed';
@@ -9,12 +9,13 @@ import { DictionaryItem } from '../types';
 
 export default function TabOneScreen() {
   const [result,setResult] = React.useState(false);
-
   const [item, setItem] = React.useState<DictionaryItem>();
 
   const random = () => {
-    // alert (data.length)
     const l = data.length;
+    if (l == 0) {
+      return;
+    }
     const ran = Math.floor(Math.random()*l)
     return data[ran];
   }
@@ -35,6 +36,7 @@ export default function TabOneScreen() {
       <Text style={styles.title}>Practice</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.practiceView}>
+        { item ? 
         <TouchableHighlight style={styles.practiceTouch} onPress={clicked}>
           <View style={styles.qaView}>
             <Text style={styles.question}>{item?.unknown}</Text>
@@ -43,6 +45,12 @@ export default function TabOneScreen() {
             }
           </View>
         </TouchableHighlight>
+        : 
+        <View style={{...styles.practiceView, alignItems: 'center'}}>
+          <Text style={styles.title}>No Placards Found</Text>
+          <Text>Please add a few from the data tab</Text>
+        </View>
+        }
       </View>
     </SafeAreaView>
   );
