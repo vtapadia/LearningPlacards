@@ -42,7 +42,7 @@ export const addOrUpdateAsync = async (item: DictionaryItem) => {
 
 export const deleteAsync = async (key: string) => {
     const index = data.findIndex(i => i.unknown==key)
-    if (index>-1) {
+    if (index > -1) {
         data.slice(index, 1);
         await saveAsync();
     }

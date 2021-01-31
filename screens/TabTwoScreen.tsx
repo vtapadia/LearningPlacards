@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Modal, StyleSheet } from 'react-native';
-import { FlatList, TextInput, TouchableHighlight } from 'react-native-gesture-handler';
-import { data, addOrUpdateAsync } from '../assets/data/Dictionary';
+import { Alert, Modal, Pressable, StyleSheet } from 'react-native';
+import { FlatList, LongPressGestureHandler, TextInput, TouchableHighlight } from 'react-native-gesture-handler';
+import { data, addOrUpdateAsync, deleteAsync } from '../assets/data/Dictionary';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView } from '../components/Themed';
@@ -15,6 +15,12 @@ export default function TabTwoScreen() {
   const toggleModalVisibility = () => { 
     setModalVisible(!modalVisible); 
   };
+
+  const longPressGestureHandler = (dItem:DictionaryItem) =>{
+    Alert.alert('Confirmation', 'Do you want to delete ' + dItem.unknown + ' ?', [
+      {text: 'Yes', style: 'default', onPress: ()=>deleteAsync(dItem.unknown)}, 
+      {text: 'Cancel', style:'cancel'}])
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,12 +62,10 @@ export default function TabTwoScreen() {
           data={data} 
           keyExtractor={(item) => item.unknown}
           renderItem={({item, index, separators}) => (
-          <TouchableHighlight 
-            style={styles.itemRow}
-            onShowUnderlay={separators.highlight}
-            onHideUnderlay={separators.unhighlight}>
+          <Pressable 
+            style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
             <Text style={styles.itemText}>{item.unknown} ({item.known})</Text>
-          </TouchableHighlight>
+          </Pressable>
         )}>
         </FlatList>
         <TouchableHighlight style={styles.buttonAdd} onPress={() => {
