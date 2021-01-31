@@ -21,3 +21,4 @@ export type DictionaryItem = {
   unknown: string
 }
 
+export type Dictionary = Array<DictionaryItem>
