@@ -30,27 +30,27 @@ export default function TabTwoScreen() {
         transparent={true} onDismiss={toggleModalVisibility}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={{padding: 5}}>Add a new Item to the list</Text>
-              <TextInput 
+              <Text style={{padding: 5, fontSize: 15}}>Add a NEW Placard</Text>
+              <TextInput style={styles.inputField}
                 onChangeText={value => {
                   if (item) 
                     item.unknown = value
                   }} 
                 placeholder="The new word" autoCompleteType='off'></TextInput>
-              <TextInput 
+              <TextInput style={styles.inputField}
                 onChangeText={value => {
                   if (item) 
                     item.known = value
                   }} 
                 placeholder="English translation"></TextInput>
-              <TouchableHighlight
+              <TouchableHighlight style={{borderWidth:1, borderRadius:10, padding: 10, marginTop:7}}
                   onPress={() => {
-                    if (item) {
+                    if (item && item.known && item.unknown) {
                       addOrUpdateAsync(item)
                     }
                     setModalVisible(!modalVisible);
                   }}>
-                  <Text>Save/Cancel Modal</Text>
+                  <Text>Save Modal</Text>
               </TouchableHighlight>
             </View>
           </View>
@@ -68,6 +68,8 @@ export default function TabTwoScreen() {
           </Pressable>
         )}>
         </FlatList>
+      </View>
+      <View style={styles.buttonView} >
         <TouchableHighlight style={styles.buttonAdd} onPress={() => {
           setItem({known: '', unknown: ''})
           setAddMode(true)
@@ -90,11 +92,9 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -102,6 +102,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    width: '70%',
+  },
+  inputField: {
+    padding: 7,
+    margin: 7,
+    fontSize: 15,
+    borderWidth: 1,
+    width: '100%'
   },
   container: {
     flex: 1,
@@ -137,6 +145,9 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
 
+  },
+  buttonView:{
+    height: '80px'
   },
   buttonAdd: {
     alignItems: 'center',

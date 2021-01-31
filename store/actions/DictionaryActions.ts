@@ -1,4 +1,5 @@
 import { Dictionary } from "../../types";
+import { INITIAL_LOAD } from "./actionTypes";
 
 
 export function initialLoad(dictionary:Dictionary) {
@@ -9,6 +10,3 @@ export function initialLoad(dictionary:Dictionary) {
 
 }
 
-export type InitialLoadAction = typeof initialLoad
-
-export const INITIAL_LOAD = "INITIAL_LOAD";
