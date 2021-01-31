@@ -14,7 +14,7 @@ export default function TabOneScreen() {
 
   const random = () => {
     // alert (data.length)
-    const l = data.length - 1;
+    const l = data.length;
     const ran = Math.floor(Math.random()*l)
     return data[ran];
   }
@@ -25,7 +25,9 @@ export default function TabOneScreen() {
 
   const clicked = () => {
     setResult(!result);
-    setItem(random());
+    if (result) {
+      setItem(random());
+    }
   }
 
   return (
