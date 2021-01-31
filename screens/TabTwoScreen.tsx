@@ -8,10 +8,6 @@ import { Text, View, SafeAreaView } from '../components/Themed';
 import {DictionaryItem} from '../types';
 
 export default function TabTwoScreen() {
-  // const [items, setItems] = React.useState<Array<DictionaryItem>>([
-  //   {known:'the', unknown:'het'},
-  //   {known:'the', unknown:'de'}
-  // ]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
   const [addMode, setAddMode] = React.useState(false);
@@ -19,10 +15,6 @@ export default function TabTwoScreen() {
   const toggleModalVisibility = () => { 
     setModalVisible(!modalVisible); 
   };
-
-  // addAsync({known: 'the', unknown: 'het'});
-  // addAsync({known: 'the', unknown: 'de'});
-  // addAsync({known: 'are', unknown: 'zijn'});
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +30,7 @@ export default function TabTwoScreen() {
                   if (item) 
                     item.unknown = value
                   }} 
-                placeholder="The new word"></TextInput>
+                placeholder="The new word" autoCompleteType='off'></TextInput>
               <TextInput 
                 onChangeText={value => {
                   if (item) 
@@ -52,7 +44,7 @@ export default function TabTwoScreen() {
                     }
                     setModalVisible(!modalVisible);
                   }}>
-                  <Text>Save Modal</Text>
+                  <Text>Save/Cancel Modal</Text>
               </TouchableHighlight>
             </View>
           </View>
