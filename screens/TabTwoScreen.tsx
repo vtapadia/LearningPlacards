@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Alert, Modal, Pressable, StyleSheet } from 'react-native';
-import { FlatList, LongPressGestureHandler, TextInput, TouchableHighlight } from 'react-native-gesture-handler';
+import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
 import { data, addOrUpdateAsync, deleteAsync } from '../assets/data/Dictionary';
 
 import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View, SafeAreaView } from '../components/Themed';
+import { Text, View, SafeAreaView, TextInput } from '../components/Themed';
 import {DictionaryItem} from '../types';
 
 export default function TabTwoScreen() {
