@@ -54,7 +54,7 @@ function TabTwoScreen(props: Props) {
                 onChangeText={value => {
                   if (item) 
                     item.unknown = value
-                  }} 
+                  }} autoCorrect={false}
                 placeholder="The new word" autoCompleteType='off'></TextInput>
               <TextInput style={styles.inputField}
                 onChangeText={value => {

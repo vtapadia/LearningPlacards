@@ -52,6 +52,7 @@ export function SafeAreaView(props: SafeAreaViewProps) {
 export function TextInput(props: TextInputProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
-  return <DefaultTextInput style={[{ backgroundColor }, style]} {...otherProps} />;
+  return <DefaultTextInput style={[{ backgroundColor, color }, style]} {...otherProps} />;
 }
