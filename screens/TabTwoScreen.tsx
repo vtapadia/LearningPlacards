@@ -7,11 +7,12 @@ import { RootState } from '../store/reducers/CombinedReducer';
 import {DictionaryItem} from '../types';
 import {addItem, removeItem} from '../store/actions/DictionaryActions'
 import { connect } from 'react-redux';
+import { DataScreenProps } from '../navigation/BottomTabNavigator';
 
 const mapState = (state: RootState) => (
   {
     data: state.dictionary.data,
-    items: state.dictionary.data.length
+    count: state.dictionary.data.length
   }
 )
 
@@ -22,7 +23,7 @@ const mapDispatch = {
 type StateProps = ReturnType<typeof mapState>
 type DispatchProps = typeof mapDispatch
 
-type Props = StateProps & DispatchProps
+type Props = StateProps & DispatchProps & DataScreenProps
 
 
 function TabTwoScreen(props: Props) {
@@ -36,7 +37,7 @@ function TabTwoScreen(props: Props) {
 
   const longPressGestureHandler = (dItem:DictionaryItem) =>{
     Alert.alert('Confirmation', 'Do you want to delete ' + dItem.unknown + ' ?', [
-      {text: 'Yes', style: 'default', onPress: ()=>removeItem(dItem)}, 
+      {text: 'Yes', style: 'default', onPress: ()=>props.removeItem(dItem)}, 
       {text: 'Cancel', style:'cancel'}])
   }
 
@@ -64,7 +65,7 @@ function TabTwoScreen(props: Props) {
               <TouchableHighlight style={{borderWidth:1, borderRadius:10, padding: 10, marginTop:7}}
                   onPress={() => {
                     if (item && item.known && item.unknown) {
-                      addItem(item)
+                      props.addItem(item)
                     }
                     setModalVisible(!modalVisible);
                   }}>

@@ -12,10 +12,11 @@ export function dictionaryReducer(state = initialState, action: ActionTypes) {
     switch (action.type) {
         case ADD_ITEM: {
             let addItemAction = action as AddItemAction;
-            let itemFound = state.data.filter(i => i.unknown==addItemAction.item.unknown)
+            let itemFound = state.data.filter(i => i.unknown.toLowerCase()==addItemAction.item.unknown.toLowerCase())
             let nState = {...state}
-            if (itemFound) {
-                //Item already present, so maybe update.
+            if (itemFound && itemFound.length>0) {
+                //Item found, ignore
+                // Maybe update later
             } else {
                 nState.data.push(addItemAction.item)
             }

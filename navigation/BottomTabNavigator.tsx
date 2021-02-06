@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
 
 import Colors from '../constants/Colors';
@@ -47,6 +47,8 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const PracticeStack = createStackNavigator<PracticeParamList>();
 
+export type PracticeScreenProps = StackScreenProps<PracticeParamList, 'PracticeScreen'>;
+
 function PracticeNavigator() {
   return (
     <PracticeStack.Navigator>
@@ -60,6 +62,8 @@ function PracticeNavigator() {
 }
 
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
+
+export type DataScreenProps = StackScreenProps<TabTwoParamList, 'TabTwoScreen'>;
 
 function TabTwoNavigator() {
   return (

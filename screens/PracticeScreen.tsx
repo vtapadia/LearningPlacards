@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView } from '../components/Themed';
+import { PracticeScreenProps } from '../navigation/BottomTabNavigator';
 import { RootState } from '../store/reducers/CombinedReducer';
 import { DictionaryItem } from '../types';
 
 const mapState = (state: RootState) => (
   {
-    data: state.dictionary.data
+    data: state.dictionary.data,
+    count: state.dictionary.data.length
   }
 )
 
@@ -19,7 +21,7 @@ const mapDispatch = {}
 type StateProps = ReturnType<typeof mapState>
 type DispatchProps = typeof mapDispatch
 
-type Props = StateProps & DispatchProps
+type Props = StateProps & DispatchProps & PracticeScreenProps
 
 function PracticeScreen(props:Props) {
 
@@ -27,17 +29,16 @@ function PracticeScreen(props:Props) {
   const [item, setItem] = React.useState<DictionaryItem>();
 
   const random = () => {
-    const l = props.data.length;
-    if (l == 0) {
+    if (props.count == 0) {
       return;
     }
-    const ran = Math.floor(Math.random()*l)
+    const ran = Math.floor(Math.random()*props.count)
     return props.data[ran];
   }
 
   React.useEffect(()=> {
     setItem(random())
-  }, []);
+  }, [props.count]);
 
   const clicked = () => {
     setResult(!result);
@@ -71,7 +72,8 @@ function PracticeScreen(props:Props) {
   );
 }
 
-export default connect(mapState, mapDispatch)(PracticeScreen)
+const PracticeScreenComp = connect(mapState, mapDispatch)(PracticeScreen)
+export default PracticeScreenComp
 
 const styles = StyleSheet.create({
   container: {
