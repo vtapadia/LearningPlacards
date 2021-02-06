@@ -169,13 +169,14 @@ const styles = StyleSheet.create({
 
   },
   buttonView:{
-    height: 80
+    height: 80,
+    width: '100%',
   },
   buttonAdd: {
     alignItems: 'center',
     alignSelf: 'stretch',
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
   }
 
 });
