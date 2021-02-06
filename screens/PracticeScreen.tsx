@@ -1,23 +1,38 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { data } from '../assets/data/DictionaryManager';
+import { connect } from 'react-redux';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView } from '../components/Themed';
+import { RootState } from '../store/reducers/CombinedReducer';
 import { DictionaryItem } from '../types';
 
-export default function PracticeScreen() {
+const mapState = (state: RootState) => (
+  {
+    data: state.dictionary.data
+  }
+)
+
+const mapDispatch = {}
+
+type StateProps = ReturnType<typeof mapState>
+type DispatchProps = typeof mapDispatch
+
+type Props = StateProps & DispatchProps
+
+function PracticeScreen(props:Props) {
+
   const [result,setResult] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
 
   const random = () => {
-    const l = data.length;
+    const l = props.data.length;
     if (l == 0) {
       return;
     }
     const ran = Math.floor(Math.random()*l)
-    return data[ran];
+    return props.data[ran];
   }
 
   React.useEffect(()=> {
@@ -55,6 +70,8 @@ export default function PracticeScreen() {
     </SafeAreaView>
   );
 }
+
+export default connect(mapState, mapDispatch)(PracticeScreen)
 
 const styles = StyleSheet.create({
   container: {

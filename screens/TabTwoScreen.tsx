@@ -1,13 +1,31 @@
 import * as React from 'react';
 import { Alert, Modal, Pressable, StyleSheet } from 'react-native';
 import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
-import { data, addOrUpdateAsync, deleteAsync } from '../assets/data/DictionaryManager';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView, TextInput } from '../components/Themed';
+import { RootState } from '../store/reducers/CombinedReducer';
 import {DictionaryItem} from '../types';
+import {addItem, removeItem} from '../store/actions/DictionaryActions'
+import { connect } from 'react-redux';
 
-export default function TabTwoScreen() {
+const mapState = (state: RootState) => (
+  {
+    data: state.dictionary.data,
+    items: state.dictionary.data.length
+  }
+)
+
+const mapDispatch = {
+  addItem, removeItem
+}
+
+type StateProps = ReturnType<typeof mapState>
+type DispatchProps = typeof mapDispatch
+
+type Props = StateProps & DispatchProps
+
+
+function TabTwoScreen(props: Props) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
   const [addMode, setAddMode] = React.useState(false);
@@ -18,7 +36,7 @@ export default function TabTwoScreen() {
 
   const longPressGestureHandler = (dItem:DictionaryItem) =>{
     Alert.alert('Confirmation', 'Do you want to delete ' + dItem.unknown + ' ?', [
-      {text: 'Yes', style: 'default', onPress: ()=>deleteAsync(dItem.unknown)}, 
+      {text: 'Yes', style: 'default', onPress: ()=>removeItem(dItem)}, 
       {text: 'Cancel', style:'cancel'}])
   }
 
@@ -46,7 +64,7 @@ export default function TabTwoScreen() {
               <TouchableHighlight style={{borderWidth:1, borderRadius:10, padding: 10, marginTop:7}}
                   onPress={() => {
                     if (item && item.known && item.unknown) {
-                      addOrUpdateAsync(item)
+                      addItem(item)
                     }
                     setModalVisible(!modalVisible);
                   }}>
@@ -59,7 +77,7 @@ export default function TabTwoScreen() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.dataView} >
         <FlatList style={styles.flatList}
-          data={data} 
+          data={props.data} 
           keyExtractor={(item) => item.unknown}
           renderItem={({item, index, separators}) => (
           <Pressable 
@@ -82,6 +100,9 @@ export default function TabTwoScreen() {
     </SafeAreaView>
   );
 }
+
+export default connect(mapState, mapDispatch)(TabTwoScreen)
+
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -147,7 +168,7 @@ const styles = StyleSheet.create({
 
   },
   buttonView:{
-    height: '80px'
+    height: 80
   },
   buttonAdd: {
     alignItems: 'center',

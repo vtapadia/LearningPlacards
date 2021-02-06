@@ -2,7 +2,10 @@ import { combineReducers } from 'redux';
 import { dictionaryReducer } from "./DictionaryReducer";
 import { useSelector, TypedUseSelectorHook } from 'react-redux'
 
-const combineReducer = combineReducers({dictionaryReducer});
+const combineReducer = combineReducers(
+    {
+        dictionary:dictionaryReducer
+    });
 
 export default combineReducer;
 
