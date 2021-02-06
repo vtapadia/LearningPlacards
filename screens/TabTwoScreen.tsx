@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Alert, Modal, Pressable, StyleSheet } from 'react-native';
 import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
-import { data, addOrUpdateAsync, deleteAsync } from '../assets/data/Dictionary';
+import { data, addOrUpdateAsync, deleteAsync } from '../assets/data/DictionaryManager';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView, TextInput } from '../components/Themed';

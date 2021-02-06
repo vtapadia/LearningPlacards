@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
-import { data } from '../assets/data/Dictionary';
+import { data } from '../assets/data/DictionaryManager';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View, SafeAreaView } from '../components/Themed';

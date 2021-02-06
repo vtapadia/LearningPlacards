@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
-import * as Dictionary from '../assets/data/Dictionary';
+import * as Dictionary from '../assets/data/DictionaryManager';
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);

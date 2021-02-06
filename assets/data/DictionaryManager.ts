@@ -7,7 +7,6 @@ import { initialLoad } from '../../store/actions/DictionaryActions';
 
 const dataFile = FileSystem.documentDirectory + "dictionary.v1.json";
 
-// export let [data, setData] = React.useState<Dictionary>([]);
 export const data:Dictionary = [];
 const saveEnabled = true;
 
