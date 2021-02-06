@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Modal, Pressable, StyleSheet } from 'react-native';
+import { Alert, Modal, Pressable, StyleSheet, TextInputSubmitEditingEventData } from 'react-native';
 import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
 
 import { Text, View, SafeAreaView, TextInput } from '../components/Themed';
@@ -27,6 +27,7 @@ type Props = StateProps & DispatchProps & DataScreenProps
 
 
 function TabTwoScreen(props: Props) {
+  const inputSecound = React.createRef<typeof TextInput>(); //TODO Need to figure out how to pass the reference and use it.
   const [modalVisible, setModalVisible] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
   const [addMode, setAddMode] = React.useState(false);
@@ -41,6 +42,17 @@ function TabTwoScreen(props: Props) {
       {text: 'Cancel', style:'cancel'}])
   }
 
+  const handleFirstTextComplete =()=>{
+    // console.log(inputSecound.current)
+  }
+
+  const handleSaveItemEvent = () => {
+    if (item && item.known && item.unknown) {
+      props.addItem(item)
+    }
+    setModalVisible(!modalVisible);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Modal
@@ -50,25 +62,24 @@ function TabTwoScreen(props: Props) {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={{padding: 5, fontSize: 15}}>Add a NEW Placard</Text>
-              <TextInput style={styles.inputField}
+              <TextInput style={styles.inputField} autoFocus={true}
+                returnKeyType='next'
+                onSubmitEditing={handleFirstTextComplete}
                 onChangeText={value => {
                   if (item) 
                     item.unknown = value
                   }} autoCorrect={false}
                 placeholder="The new word" autoCompleteType='off'></TextInput>
-              <TextInput style={styles.inputField}
+              <TextInput style={styles.inputField} 
+                returnKeyType='done'
+                onSubmitEditing={handleSaveItemEvent}
                 onChangeText={value => {
                   if (item) 
                     item.known = value
                   }} 
-                placeholder="English translation"></TextInput>
+                placeholder="In English"></TextInput>
               <TouchableHighlight style={{borderWidth:1, borderRadius:10, padding: 10, marginTop:7}}
-                  onPress={() => {
-                    if (item && item.known && item.unknown) {
-                      props.addItem(item)
-                    }
-                    setModalVisible(!modalVisible);
-                  }}>
+                  onPress={handleSaveItemEvent}>
                   <Text>Save Modal</Text>
               </TouchableHighlight>
             </View>
@@ -131,7 +142,8 @@ const styles = StyleSheet.create({
     margin: 7,
     fontSize: 15,
     borderWidth: 1,
-    width: '100%'
+    width: '100%',
+    textAlign: 'center'
   },
   container: {
     flex: 1,
