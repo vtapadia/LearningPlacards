@@ -96,7 +96,7 @@ function TabTwoScreen(props: Props) {
           renderItem={({item, index, separators}) => (
           <Pressable 
             style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
-            <Text style={styles.itemText}>{item.unknown} ({item.known})</Text>
+            <Text style={styles.itemText} adjustsFontSizeToFit={true}>{item.unknown} ({item.known})</Text>
           </Pressable>
         )}>
         </FlatList>
@@ -179,8 +179,7 @@ const styles = StyleSheet.create({
     
   },
   itemText: {
-    fontSize: 16,
-
+    fontSize: 20,
   },
   buttonView:{
     height: 80,
