@@ -11,7 +11,9 @@ import { DataScreenProps } from '../navigation/BottomTabNavigator';
 
 const mapState = (state: RootState) => (
   {
-    data: state.dictionary.data,
+    data: state.dictionary.data.sort((a,b)=>{
+      return a.unknown.localeCompare(b.unknown)
+    }),
     count: state.dictionary.data.length
   }
 )
@@ -189,6 +191,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingBottom: 10,
     paddingTop: 10,
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: '#eee'
   }
 
 });
