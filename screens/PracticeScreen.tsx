@@ -55,9 +55,9 @@ function PracticeScreen(props:Props) {
         { item ? 
         <TouchableHighlight style={styles.practiceTouch} onPress={clicked}>
           <View style={styles.qaView}>
-            <Text style={styles.question}>{item?.unknown}</Text>
+            <Text style={styles.question} adjustsFontSizeToFit={true}>{item?.unknown}</Text>
             { result ? 
-            <Text style={styles.answer}>{item?.known}</Text> : <Text style={styles.answer}></Text>
+            <Text style={styles.answer} adjustsFontSizeToFit={true}>{item?.known}</Text> : <Text style={styles.answer}></Text>
             }
           </View>
         </TouchableHighlight>
@@ -106,17 +106,27 @@ const styles = StyleSheet.create({
   },
   qaView:{
     height: '100%',
-    alignItems: 'center',
+    // borderWidth: 1,
+    // borderColor: 'green',
+    alignItems: 'stretch',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-evenly'
   },
   question: {
-    height: '40%',
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    
+    // borderWidth: 1,
+    // borderColor: 'green',
     padding: 10,
-    fontSize: 24
+    fontSize: 36
   },
   answer: {
-    height: '40%',
-    fontSize: 24,
+    flex: 1,
+    textAlign: 'center',
+    // borderWidth: 1,
+    // borderColor: 'green',
+    fontSize: 36,
   }
 });
