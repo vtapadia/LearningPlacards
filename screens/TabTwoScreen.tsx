@@ -100,7 +100,7 @@ function TabTwoScreen(props: Props) {
       {/* <Text style={styles.title}>Data Overview</Text> */}
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.dataView} >
-        <Animated.FlatList style={styles.flatList}
+        <Animated.FlatList 
           data={props.data} 
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: scrollY}}}],
@@ -148,10 +148,6 @@ function TabTwoScreen(props: Props) {
               <Pressable onLongPress={()=>longPressGestureHandler(item)}>
                 <AntDesign name="delete" size={BIN_SIZE} color={Colors[colorScheme].text} />
               </Pressable>
-              {/* <Pressable 
-                style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
-                <Text style={styles.itemText} adjustsFontSizeToFit={true}>{item.unknown} ({item.known})</Text>
-              </Pressable> */}
             </Animated.View>
         }} />
       </View>
@@ -161,7 +157,7 @@ function TabTwoScreen(props: Props) {
           setAddMode(true)
           setModalVisible(true)
         }}>
-          <Text>Add More</Text>
+          <Text style={{fontSize: 28, fontWeight: '500'}}>Add More</Text>
         </TouchableHighlight>
       </View>
 
@@ -221,33 +217,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     alignSelf: 'stretch',
   },
-  flatList: {
-  },
-  itemRow: {
-    // borderWidth: 1,
-    justifyContent: 'center',
-    alignContent: 'stretch',
-    alignItems: 'stretch',
-    paddingVertical: 7
-    // backgroundColor: 'lightgrey'
-    
-  },
-  itemText: {
-    fontSize: 20,
-  },
   buttonView:{
-    height: 80,
     padding: SPACING,
     width: '100%',
   },
   buttonAdd: {
     alignItems: 'center',
     alignSelf: 'stretch',
-    paddingBottom: 10,
-    paddingTop: 10,
     borderWidth: 1,
-    borderRadius: 15,
-    borderColor: '#eee'
+    borderRadius: 12,
+    borderColor: '#eee',
   }
 
 });
