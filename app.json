@@ -7,7 +7,7 @@
     "privacy": "public",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "learningPlacards",
+    "scheme": "learning-placards",
     "userInterfaceStyle": "automatic",
     "primaryColor": "#FFFFFF",
     "splash": {
