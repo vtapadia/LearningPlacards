@@ -27,6 +27,7 @@ type DispatchProps = typeof mapDispatch
 
 type Props = StateProps & DispatchProps & DataScreenProps
 
+const SPACING = 20;
 
 function TabTwoScreen(props: Props) {
   const inputSecound = React.createRef<typeof TextInput>(); //TODO Need to figure out how to pass the reference and use it.
@@ -92,12 +93,22 @@ function TabTwoScreen(props: Props) {
       <View style={styles.dataView} >
         <FlatList style={styles.flatList}
           data={props.data} 
+          contentContainerStyle={{
+            padding: SPACING
+          }}
           keyExtractor={(item) => item.unknown}
           renderItem={({item, index, separators}) => (
-          <Pressable 
-            style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
-            <Text style={styles.itemText} adjustsFontSizeToFit={true}>{item.unknown} ({item.known})</Text>
-          </Pressable>
+            <View style={{flexDirection: 'column', padding: SPACING/2, 
+            marginBottom: SPACING, borderRadius: 12,
+            shadowColor: '#000', 
+            shadowOffset: {width: 0, height: 10}, shadowRadius: 20, shadowOpacity: .3}}>
+              <Text style={{fontWeight: '700', fontSize: 22}}>{item.unknown}</Text>
+              <Text style={{fontSize: 18, opacity: .7}}>{item.known}</Text>
+              {/* <Pressable 
+                style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
+                <Text style={styles.itemText} adjustsFontSizeToFit={true}>{item.unknown} ({item.known})</Text>
+              </Pressable> */}
+            </View>
         )}>
         </FlatList>
       </View>
