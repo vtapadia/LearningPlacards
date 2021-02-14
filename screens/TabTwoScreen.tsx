@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Alert, Animated, Modal, Pressable, StyleSheet, TextInputSubmitEditingEventData } from 'react-native';
 import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
 
+import * as Layout from '../constants/Layout';
 import { Text, View, SafeAreaView, TextInput } from '../components/Themed';
 import { RootState } from '../store/reducers/CombinedReducer';
 import {DictionaryItem} from '../types';
@@ -9,6 +10,8 @@ import {addItem, removeItem} from '../store/actions/DictionaryActions'
 import { connect } from 'react-redux';
 import { DataScreenProps } from '../navigation/BottomTabNavigator';
 import { AntDesign } from '@expo/vector-icons'; 
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 const mapState = (state: RootState) => (
   {
@@ -39,6 +42,8 @@ function TabTwoScreen(props: Props) {
   const [addMode, setAddMode] = React.useState(false);
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
+  const colorScheme = useColorScheme();
+  
   const toggleModalVisibility = () => { 
     setModalVisible(!modalVisible); 
   };
@@ -130,8 +135,8 @@ function TabTwoScreen(props: Props) {
             padding: SPACING/2, 
             justifyContent: 'space-between',
             marginBottom: SPACING, borderRadius: 12,
-            shadowColor: '#000', 
             borderWidth: 1,
+            shadowColor: '#000', 
             shadowOffset: {width: 0, height: 10}, shadowRadius: 20, shadowOpacity: .4,
             opacity,
             transform: [{scale}]
@@ -141,7 +146,7 @@ function TabTwoScreen(props: Props) {
                 <Text style={{fontSize: 18, opacity: .7}}>{item.known}</Text>
               </View>
               <Pressable onLongPress={()=>longPressGestureHandler(item)}>
-                <AntDesign name="delete" size={BIN_SIZE} color="black" />
+                <AntDesign name="delete" size={BIN_SIZE} color={Colors[colorScheme].text} />
               </Pressable>
               {/* <Pressable 
                 style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
