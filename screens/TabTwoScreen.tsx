@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Modal, Pressable, StyleSheet, TextInputSubmitEditingEventData } from 'react-native';
+import { Alert, Animated, Modal, Pressable, StyleSheet, TextInputSubmitEditingEventData } from 'react-native';
 import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
 
 import { Text, View, SafeAreaView, TextInput } from '../components/Themed';
@@ -8,6 +8,7 @@ import {DictionaryItem} from '../types';
 import {addItem, removeItem} from '../store/actions/DictionaryActions'
 import { connect } from 'react-redux';
 import { DataScreenProps } from '../navigation/BottomTabNavigator';
+import { AntDesign } from '@expo/vector-icons'; 
 
 const mapState = (state: RootState) => (
   {
@@ -28,12 +29,15 @@ type DispatchProps = typeof mapDispatch
 type Props = StateProps & DispatchProps & DataScreenProps
 
 const SPACING = 20;
+const BIN_SIZE = 40;
+const ITEM_SIZE = BIN_SIZE + SPACING*2 + SPACING/2
 
 function TabTwoScreen(props: Props) {
   const inputSecound = React.createRef<typeof TextInput>(); //TODO Need to figure out how to pass the reference and use it.
   const [modalVisible, setModalVisible] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
   const [addMode, setAddMode] = React.useState(false);
+  const scrollY = React.useRef(new Animated.Value(0)).current;
 
   const toggleModalVisibility = () => { 
     setModalVisible(!modalVisible); 
@@ -88,29 +92,63 @@ function TabTwoScreen(props: Props) {
             </View>
           </View>
       </Modal>
-      <Text style={styles.title}>Data Overview</Text>
+      {/* <Text style={styles.title}>Data Overview</Text> */}
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.dataView} >
-        <FlatList style={styles.flatList}
+        <Animated.FlatList style={styles.flatList}
           data={props.data} 
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: scrollY}}}],
+            {useNativeDriver: true})}
           contentContainerStyle={{
             padding: SPACING
           }}
           keyExtractor={(item) => item.unknown}
-          renderItem={({item, index, separators}) => (
-            <View style={{flexDirection: 'column', padding: SPACING/2, 
+          renderItem={({item, index, separators}) => {
+            const inputRange = [
+              -1, 
+              0, 
+              ITEM_SIZE * (index),
+              ITEM_SIZE * (index+2)
+            ]
+            const opacityInputRange = [
+              -1, 
+              0, 
+              ITEM_SIZE * (index),
+              ITEM_SIZE * (index+1)
+            ]
+            const scale = scrollY.interpolate({
+              inputRange,
+              outputRange: [1,1,1,0]
+            })
+            const opacity = scrollY.interpolate({
+              inputRange: opacityInputRange,
+              outputRange: [1,1,1,0]
+            })
+
+            return <Animated.View style={{flexDirection: 'row', 
+            padding: SPACING/2, 
+            justifyContent: 'space-between',
             marginBottom: SPACING, borderRadius: 12,
             shadowColor: '#000', 
-            shadowOffset: {width: 0, height: 10}, shadowRadius: 20, shadowOpacity: .3}}>
-              <Text style={{fontWeight: '700', fontSize: 22}}>{item.unknown}</Text>
-              <Text style={{fontSize: 18, opacity: .7}}>{item.known}</Text>
+            borderWidth: 1,
+            shadowOffset: {width: 0, height: 10}, shadowRadius: 20, shadowOpacity: .4,
+            opacity,
+            transform: [{scale}]
+            }}>
+              <View style={{flexDirection: 'column', backgroundColor: 'transparent'}}>
+                <Text style={{fontWeight: '700', fontSize: 22}}>{item.unknown}</Text>
+                <Text style={{fontSize: 18, opacity: .7}}>{item.known}</Text>
+              </View>
+              <Pressable onLongPress={()=>longPressGestureHandler(item)}>
+                <AntDesign name="delete" size={BIN_SIZE} color="black" />
+              </Pressable>
               {/* <Pressable 
                 style={styles.itemRow} onLongPress={()=>longPressGestureHandler(item)}>
                 <Text style={styles.itemText} adjustsFontSizeToFit={true}>{item.unknown} ({item.known})</Text>
               </Pressable> */}
-            </View>
-        )}>
-        </FlatList>
+            </Animated.View>
+        }} />
       </View>
       <View style={styles.buttonView} >
         <TouchableHighlight style={styles.buttonAdd} onPress={() => {
@@ -194,6 +232,7 @@ const styles = StyleSheet.create({
   },
   buttonView:{
     height: 80,
+    padding: SPACING,
     width: '100%',
   },
   buttonAdd: {
