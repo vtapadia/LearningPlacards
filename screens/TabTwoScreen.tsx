@@ -34,6 +34,7 @@ type Props = StateProps & DispatchProps & DataScreenProps
 const SPACING = 20;
 const BIN_SIZE = 40;
 const ITEM_SIZE = BIN_SIZE + SPACING*2 + SPACING/2
+const SCROLL_AREA_SIZE = 250
 
 function TabTwoScreen(props: Props) {
   const inputSecound = React.createRef<typeof TextInput>(); //TODO Need to figure out how to pass the reference and use it.
@@ -48,7 +49,7 @@ function TabTwoScreen(props: Props) {
     setModalVisible(!modalVisible); 
   };
 
-  const longPressGestureHandler = (dItem:DictionaryItem) =>{
+  const binPress = (dItem:DictionaryItem) =>{
     Alert.alert('Confirmation', 'Do you want to delete ' + dItem.unknown + ' ?', [
       {text: 'Yes', style: 'default', onPress: ()=>props.removeItem(dItem)}, 
       {text: 'Cancel', style:'cancel'}])
@@ -145,7 +146,7 @@ function TabTwoScreen(props: Props) {
                 <Text style={{fontWeight: '700', fontSize: 22}}>{item.unknown}</Text>
                 <Text style={{fontSize: 18, opacity: .7}}>{item.known}</Text>
               </View>
-              <Pressable onLongPress={()=>longPressGestureHandler(item)}>
+              <Pressable onPress={()=>binPress(item)}>
                 <AntDesign name="delete" size={BIN_SIZE} color={Colors[colorScheme].text} />
               </Pressable>
             </Animated.View>
