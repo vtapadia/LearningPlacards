@@ -55,10 +55,10 @@ export function SafeAreaView(props: SafeAreaViewProps) {
   return <DefaultSafeAreaView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
-export const TextInput = React.forwardRef((props:TextInputProps, refer) => {
+export const TextInput = React.forwardRef<DefaultTextInput, TextInputProps>((props, ref) => {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
-  return <DefaultTextInput style={[{ backgroundColor, color }, style]} {...otherProps} />;
+  return <DefaultTextInput style={[{ backgroundColor, color }, style]} {...otherProps} ref={ref} />;
 })
