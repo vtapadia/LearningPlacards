@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Animated, Modal, Pressable, StyleSheet, TextInputSubmitEditingEventData } from 'react-native';
+import { Alert, Animated, Modal, Pressable, StyleSheet, TextInput as RNTextInput } from 'react-native';
 import { FlatList, LongPressGestureHandler, TouchableHighlight } from 'react-native-gesture-handler';
 
 import * as Layout from '../constants/Layout';
@@ -37,7 +37,7 @@ const ITEM_SIZE = BIN_SIZE + SPACING*2 + SPACING/2
 const SCROLL_AREA_SIZE = 250
 
 function TabTwoScreen(props: Props) {
-  const inputSecound = React.createRef<typeof TextInput>(); //TODO Need to figure out how to pass the reference and use it.
+  const inputSecound = React.createRef<RNTextInput>(); //TODO Need to figure out how to pass the reference and use it.
   const [modalVisible, setModalVisible] = React.useState(false);
   const [item, setItem] = React.useState<DictionaryItem>();
   const [addMode, setAddMode] = React.useState(false);
@@ -56,7 +56,7 @@ function TabTwoScreen(props: Props) {
   }
 
   const handleFirstTextComplete =()=>{
-    // console.log(inputSecound.current)
+    inputSecound.current?.focus();
   }
 
   const handleSaveItemEvent = () => {
